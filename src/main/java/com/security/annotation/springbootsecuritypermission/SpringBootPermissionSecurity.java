@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SpringBootPermissionSecurity extends WebSecurityConfigurerAdapter {
 
     private static final String[] noFilterPages = new String[]
-            {"/", "/login.html*","/css/**", "/js/**", "/img/**","/fonts/**"};
+            {"/", "/login*","/vendor/**","/img/**"};
 
     @Bean
     public UserDetailsService createUserDetailsBean() {
@@ -37,7 +37,7 @@ public class SpringBootPermissionSecurity extends WebSecurityConfigurerAdapter {
 
     @Bean
     public LoginUrlAuthenticationEntryPoint createDelegateAuthEntryPoint(){
-        return new LoginUrlAuthenticationEntryPoint("/login.html");
+        return new LoginUrlAuthenticationEntryPoint("/login");
     }
 
     @Override
@@ -47,12 +47,13 @@ public class SpringBootPermissionSecurity extends WebSecurityConfigurerAdapter {
                 .anyRequest().fullyAuthenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(createDelegateAuthEntryPoint())
+                .accessDeniedPage("/accessDenied")
                 .and()
                 .formLogin()
-                .loginPage("/login.html")
+                .loginPage("/login")
                 .loginProcessingUrl("/login")
-                .failureUrl("/login.html?error")
-                .defaultSuccessUrl("/main.html")
+                .failureUrl("/login?error")
+                .defaultSuccessUrl("/dashboard")
                 .permitAll()
                 .and()
                 .logout()
@@ -65,7 +66,7 @@ public class SpringBootPermissionSecurity extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 .sessionManagement()
-                .invalidSessionUrl("/login.html");
+                .invalidSessionUrl("/login");
     }
 
 }
