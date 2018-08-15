@@ -106,3 +106,41 @@ public class PermissionAspect {
     }
 }
 ```
+This is PermissionCheck.class to use in Controllers.
+
+```
+@GetMapping("dashboard")
+@PermissionCheck(workspace = {Workspace.DASHBOARD},read = true)
+public String dashboard() {
+    return "dashboard";
+}
+
+@GetMapping("projects")
+@PermissionCheck(workspace = {Workspace.PROJECT},read = true)
+public String projects() {
+    return "projects";
+}
+
+@GetMapping("tasks")
+@PermissionCheck(workspace = {Workspace.TASK},read = true)
+public String tasks() {
+    return "tasks";
+}
+
+@GetMapping("teams")
+@PermissionCheck(workspace = {Workspace.TEAM},read = true)
+public String teams() {
+    return "teams";
+}
+
+@GetMapping("employees")
+@PermissionCheck(workspace = {Workspace.EMPLOYEE},read = true)
+public String employees() {
+    return "employees";
+}
+
+@GetMapping("accessDenied")
+public String accessDenied() {
+    return "accessDenied";
+}
+```
