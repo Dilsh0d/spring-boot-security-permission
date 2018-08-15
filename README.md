@@ -41,3 +41,68 @@ Permission table contains these are data.
 | User | Task | true | true | false |
 | User | Team | true | false | false |
 
+Create custom annotation check user permission to workspace.
+1. PermissionCheck.class
+```
+@Retention(RetentionPolicy.RUNTIME)
+public @interface PermissionCheck {
+
+    String[] workspace() default {};
+
+    boolean read() default false;
+
+    boolean write() default false;
+
+    boolean delete() default false;
+}
+```
+2. PermissionAspect.class
+```
+@Aspect
+@Component
+public class PermissionAspect {
+
+    @Autowired
+    private PermissionRepository permissionRepository;
+
+    @Around("execution(@com.security.annotation.springbootsecuritypermission.aspect.PermissionCheck * *(..)) && @annotation(permissionCheck)")
+    public Object doSomething(ProceedingJoinPoint pjp, PermissionCheck permissionCheck) throws Throwable {
+        if(permissionCheck.workspace().length>0
+                && SecurityUtil.getUser()!=null){
+           List<PermissionEntity> permissionList = permissionRepository.findByRolesAndWorkspaceIn(
+                    SecurityUtil.getUser().getRoles(),permissionCheck.workspace());
+
+
+           Function<PermissionEntity,Boolean> permissionFunction = new Function<PermissionEntity, Boolean>() {
+               @Override
+               public Boolean apply(PermissionEntity permissionEntity) {
+                   if(permissionCheck.read() && permissionEntity.getRead()) {
+                       return true;
+                   }
+                   if(permissionCheck.write() && permissionEntity.getWrite()) {
+                       return true;
+                   }
+                   if(permissionCheck.delete() && permissionEntity.getDelete()) {
+                       return true;
+                   }
+                   return false;
+               }
+           };
+
+           final boolean[] hasPermission = {false};
+           permissionList.forEach(permissionEntity -> {
+               hasPermission[0] = permissionFunction.apply(permissionEntity);
+               if(hasPermission[0]){
+                   return;
+               }
+           });
+
+            if(!hasPermission[0]){
+                throw new AccessDeniedException("Do not has permission");
+            }
+
+        }
+        return pjp.proceed();
+    }
+}
+```
