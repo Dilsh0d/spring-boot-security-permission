@@ -106,7 +106,7 @@ public class PermissionAspect {
     }
 }
 ```
-This is PermissionCheck.class to use in Controllers.
+This is PermissionCheck.class annotation to use in Controllers.
 
 ```
 @GetMapping("dashboard")
@@ -144,3 +144,8 @@ public String accessDenied() {
     return "accessDenied";
 }
 ```
+If AccesDeniedException then SpringBootPermissionSecurity.class written logic redirect to **/accessDenied** url.
+```
+.accessDeniedPage("/accessDenied")
+```
+ 
