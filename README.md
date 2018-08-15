@@ -15,3 +15,13 @@ After run application at the resources/sqlpatch folder have two sql falies. Appl
 
 * [permission.sql](https://github.com/Dilsh0d/spring-boot-security-permission/blob/master/src/main/resources/sqlpatch/permission.sql)
 * [users.sql](https://github.com/Dilsh0d/spring-boot-security-permission/blob/master/src/main/resources/sqlpatch/users.sql)
+
+Permission table contains these are data.
+
+| Roles  | Workspace | Read | Write | Delete |
+| ------------- | ------------- |
+| Admin  | Dashboard | true | true | true |
+| Admin  | Employee | true | true | true |
+| Admin  | Project | true | true | true |
+| Admin  | Task | true | true | true |
+| Admin  | Team | true | true | true |
