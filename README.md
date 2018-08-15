@@ -19,7 +19,7 @@ After run application at the resources/sqlpatch folder have two sql falies. Appl
 Permission table contains these are data.
 
 | Roles  | Workspace | Read | Write | Delete |
-| ------------- | ------------- |
+| ------ | --------- |------|-------|--------|
 | Admin  | Dashboard | true | true | true |
 | Admin  | Employee | true | true | true |
 | Admin  | Project | true | true | true |
