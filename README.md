@@ -25,3 +25,19 @@ Permission table contains these are data.
 | Admin  | Project | true | true | true |
 | Admin  | Task | true | true | true |
 | Admin  | Team | true | true | true |
+| Pm  | Dashboard | true | false | false |
+| Pm  | Employee | true | false | false |
+| Pm  | Project | true | true | true |
+| Pm  | Task | true | true | true |
+| Pm  | Team | true | false | false |
+| TeamLead | Dashboard | true | false | false |
+| TeamLead | Employee | true | true | true |
+| TeamLead | Project | true | false | false |
+| TeamLead | Task | true | false | false |
+| TeamLead | Team | true | true | true |
+| User | Dashboard | false | false | false |
+| User | Employee | true | false | false |
+| User | Project | true | false | false |
+| User | Task | true | true | false |
+| User | Team | true | false | false |
+
